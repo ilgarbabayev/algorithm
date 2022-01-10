@@ -7,7 +7,6 @@ import java.util.stream.IntStream;
 public class FindNumber {
     public static void main(String[] args){
         List<Integer> list = new ArrayList<>();
-        Map<Integer,Integer> correctList = new HashMap();
 
         IntStream.range(1,5).forEach(i -> {
             list.add(new Random().nextInt(6) + 1);
@@ -17,45 +16,52 @@ public class FindNumber {
 
 //        Scanner in = new Scanner(System.in);
 
-
-
+//        Map<Integer,Integer> correctList = new HashMap<>();
 //        while (correctList.size()<6) {
 //            String s = in.nextLine();
 //            System.out.println(s);
 
 //            List<Integer> response = Arrays.stream(s.split(",")).map(Integer::valueOf).collect(Collectors.toList());
 //            System.out.println(response);
-            List<Integer> response = Arrays.stream("1,2,3,4".split(",")).map(Integer::valueOf).collect(Collectors.toList());
+        List<Integer> response = Arrays.stream("1,2,4,4".split(",")).map(Integer::valueOf).collect(Collectors.toList());
 
         System.out.println(response);
 
-            List<String> playerResponse = new ArrayList<>();
+        Map<Integer, Integer> map = new HashMap<>();
+        List<String> playerResponse = new ArrayList<>();
+        List<Integer> tempResponse = new ArrayList<>();
 
-            for(int i = 0; i<4; i++) {
-                if (list.get(i).equals(response.get(i))){
-                    playerResponse.add("B");
-                } else if (list.contains(response.get(i))) {
-                    playerResponse.add("W");
-                } else {
-                    playerResponse.add("E");
-                }
+        for (int i = 0; i < 4; i++) {
+
+            Integer keyCoder = list.get(i);
+            Integer keyResponse = response.get(i);
+
+            if (keyCoder.equals(keyResponse)){
+                playerResponse.add("B");
+            } else {
+                Integer value = map.getOrDefault(keyCoder, 0);
+                map.put(keyCoder, ++value);
+                tempResponse.add(keyResponse);
             }
+        }
 
-            System.out.println("before sort: " + playerResponse);
+        System.out.println(map);
+        System.out.println(tempResponse);
 
-            List<String> sorted = playerResponse.stream().sorted((a,b) -> {
-                if (a.equals("B") || b.equals("B")) {
-                    return a.compareTo(b);
-                } else {
-                    return b.compareTo(a);
-                }
-            }).collect(Collectors.toList());
+        tempResponse.forEach(r -> {
+            Integer value = map.getOrDefault(r, 0);
+            if (value > 0) {
+                playerResponse.add("W");
+                map.put(r, --value);
+            }
+        });
 
-            System.out.println("after sort: " + sorted);
+        for (int i = playerResponse.size(); i < 4; i++) {
+            playerResponse.add("E");
+        }
 
+        System.out.println("response: " + playerResponse);
 
-            System.out.println(correctList);
-            Integer.compare(1,2);
 //        }
     }
 
