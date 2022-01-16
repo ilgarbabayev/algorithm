@@ -28,7 +28,7 @@ public class FindNumber {
         System.out.println(response);
 
         Map<Integer, Integer> map = new HashMap<>();
-        List<String> playerResponse = new ArrayList<>();
+        List<String> playerResponse = new ArrayList<>(4);
         List<Integer> tempResponse = new ArrayList<>();
 
         for (int i = 0; i < 4; i++) {
@@ -56,7 +56,7 @@ public class FindNumber {
             }
         });
 
-        for (int i = playerResponse.size(); i < 4; i++) {
+        while (playerResponse.size() < 4) {
             playerResponse.add("E");
         }
 
