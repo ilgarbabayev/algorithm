@@ -2,11 +2,9 @@ package com.company.test;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.IntStream;
 
 public class ArrayManipulationOpt {
     public static void main(String[] args) {
-//        List<List<Integer>> queries = List.of(List.of(1,5,3), List.of(4,8,7), List.of(6,9,1));
         List<List<Integer>> queries = MockData.getMockData(5);
         long result = arrayManipulation(10, queries);
         System.out.println(result);

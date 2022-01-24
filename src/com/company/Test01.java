@@ -10,8 +10,11 @@ import java.util.*;
 public class Test01 {
 
     public static void main(String[] args) throws IOException {
-        ArrayDeque<Integer> deque = new ArrayDeque<>();
-        LinkedList<Integer> list = new LinkedList<>();
+        int[] i = new int[5];
+
+        for (int a : i) {
+            System.out.println(a);
+        }
 
     }
 }
