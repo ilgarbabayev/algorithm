@@ -30,12 +30,26 @@ public class ArrayManipulationOpt {
             Interval toAdd = new Interval(queries.get(i).get(0), queries.get(i).get(1), queries.get(i).get(2));
             Interval next = first;
 
-            while (next != null && next != toAdd) {
-                if (toAdd.getEnd() > next.getEnd()) {
+            while (next != null && !toAdd.isBeforeThan(next) && !toAdd.equals(next)) {
+                if (toAdd.getEnd() < next.getEnd()) {
+                    Interval newInterval = new Interval(next);
+                    newInterval.setStart(toAdd.getEnd() + 1);
+
+                    next.setStart(toAdd.getStart());
+                    next.setEnd(toAdd.getEnd());
+                    next.setValue(next.getValue() + toAdd.getValue());
+                    next.setNext(newInterval);
+
+                } else if (toAdd.getEnd() == next.getEnd()) {
+                    next.setStart(toAdd.getStart());
+                    next.setEnd(toAdd.getEnd());
+                    next.setValue(next.getValue() + toAdd.getValue());
+
+                }else {
                     if (toAdd.getStart() <= next.getEnd()) {
                         next.setStart(toAdd.getStart());
-                        toAdd.setStart(next.getEnd() + 1);
                         next.setValue(next.getValue() + toAdd.getValue());
+                        toAdd.setStart(next.getEnd() + 1);
 
                         if ( !next.hasNext() ) {
                             next.setNext(toAdd);
@@ -47,13 +61,6 @@ public class ArrayManipulationOpt {
                         first = next = toAdd;
                     }
 
-                } else {
-                    toAdd.setValue(next.getValue() +toAdd.getValue());
-                    next.setStart(toAdd.getEnd() + 1);
-                    Interval temp = next;
-                    first = next = toAdd;
-                    toAdd = temp;
-                    first.setNext(toAdd);
                 }
 
                 if (next.getValue() > highestValue.longValue()) {
@@ -79,6 +86,13 @@ class Interval {
         this.start = start;
         this.end = end;
         this.value = value;
+    }
+
+    public Interval(Interval interval) {
+        this.start = interval.getStart();
+        this.end = interval.getEnd();
+        this.value = interval.getValue();
+        this.next = interval.getNext();
     }
 
     public int getStart() {
@@ -117,12 +131,36 @@ class Interval {
         return this.next != null;
     }
 
+    public boolean isBeforeThan(Interval interval) {
+        return this.start < interval.getStart() && this.end < interval.getStart();
+    }
+
     @Override
     public String toString() {
         return "start=" + start +
                 ", end=" + end +
                 ", value=" + value +
-                "  => {" + next + " }";
+                " => " + next;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Interval)) return false;
+
+        Interval interval = (Interval) o;
+
+        if (getStart() != interval.getStart()) return false;
+        if (getEnd() != interval.getEnd()) return false;
+        return getValue() == interval.getValue();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getStart();
+        result = 31 * result + getEnd();
+        result = 31 * result + (int) (getValue() ^ (getValue() >>> 32));
+        return result;
     }
 }
 
