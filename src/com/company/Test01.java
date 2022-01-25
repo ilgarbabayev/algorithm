@@ -10,11 +10,10 @@ import java.util.*;
 public class Test01 {
 
     public static void main(String[] args) throws IOException {
-        int[] i = new int[5];
-
-        for (int a : i) {
-            System.out.println(a);
-        }
+        List<Integer> list = List.of(0,1,2,3,4,5,6,7,8,9);
+        list.forEach(i -> {
+            System.out.println(( i * ( i - 1)) / 2);
+        });
 
     }
 }
