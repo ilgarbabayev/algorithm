@@ -1,5 +1,6 @@
 package com.company.test;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -28,21 +29,27 @@ public class CountTriplet {
     }
 
     private static long countTriplets(List<Long> arr, long r) {
-        long count = 0L;
-        Map<Long, Long> map = arr.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        long count = 0;
+        Map<Long, Long> rightMap = arr.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        Map<Long, Long> leftMap = new HashMap<>();
 
-        System.out.println(map);
+        System.out.println(rightMap);
 
-        long flag = 0;
+        for (int i = 0; i < arr.size(); i++) {
+            long midTerm = arr.get(i);
+            long c1 = 0, c3 = 0;
 
-        for (int i = 0; i < arr.size() - 2; i++) {
-            long e = arr.get(i);
-            if (flag == e){
-                continue;
-            } else {
-                flag = e;
+            rightMap.put(midTerm, rightMap.getOrDefault(midTerm, 0L) - 1);
+
+            if (midTerm % r == 0) {
+                c1 = leftMap.getOrDefault(midTerm / r, 0L);
             }
-            count += map.getOrDefault(e, 0L) * map.getOrDefault(e * r, 0L) * map.getOrDefault(e * r * r, 0L);
+
+            c3 = rightMap.getOrDefault(midTerm * r, 0L);
+
+            count += c1 * c3;
+
+            leftMap.put(midTerm, leftMap.getOrDefault(midTerm, 0L) + 1);
         }
 
         return count;
