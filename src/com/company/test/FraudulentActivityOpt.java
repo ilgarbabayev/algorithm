@@ -1,16 +1,15 @@
 package com.company.test;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
-public class FraudulentActivity {
+public class FraudulentActivityOpt {
     public static void main(String[] args) {
-//        List<Integer> expenditure = new ArrayList<>(List.of(2, 3, 4, 2, 3, 6, 8, 4, 5));
-//        int d = 5;
+        List<Integer> expenditure = new ArrayList<>(List.of(2, 3, 4, 1, 2, 3, 6, 8, 4, 5));
+        int d = 5;
 //        List<Integer> expenditure = List.of(10, 20, 30, 40, 50);
 //        int d = 3;
-        List<Integer> expenditure = List.of(1,2,3,4,4);
-        int d = 4;
+//        List<Integer> expenditure = List.of(1,2,3,4,4);
+//        int d = 4;
 
         int result = activityNotifications(expenditure, d);
 
@@ -19,65 +18,72 @@ public class FraudulentActivity {
 
     public static int activityNotifications(List<Integer> expenditure, int d) {
         int result = 0;
-        int mid = d/2;
-        int[] arr = new int[201];
+        int mid;
+
+        Window window = new Window();
 
         for (int i = 0; i < d; i++) {
-            int value = expenditure.get(i);
-            arr[value]++;
+            window.addElement(expenditure.get(i));
         }
-        int[] sorted = sort(arr, d);
 
-        for (int i = 0; i < expenditure.size() - d - 1; i++) {
-            Integer toRemove = expenditure.get(i);
-            Integer toAdd = expenditure.get(i + d);
+        for (int i = d; i < expenditure.size(); i++){
+            Integer next = expenditure.get(i);
+            mid = window.getDoubleMedian();
 
-            int median = findMedian(sorted, mid);
-
-            if (toAdd >= median) {
+            if (next >= mid) {
                 result++;
             }
 
-            sorted = updateArray(arr, toRemove, toAdd, d);
-
-            System.out.println(expenditure);
+            window.remove(expenditure.get(i - d));
+            window.addElement(next);
         }
 
         return result;
     }
 
-    private static int findMedian(int[] arr, int mid) {
-        int m;
-        if (arr.length % 2 == 1) {
-            m = arr[mid] * 2;
-            return m;
-        } else {
-            m = (arr[mid] + arr[mid - 1]);
-            return m;
+    static class Window {
+        PriorityQueue<Integer> small = new PriorityQueue<>(Comparator.reverseOrder());
+        PriorityQueue<Integer> large = new PriorityQueue<>();
+
+        private void addElement(Integer num) {
+            if (large.isEmpty() || num >= large.peek()) {
+                large.offer(num);
+            } else {
+                small.offer(num);
+            }
+
+            adjustSize();
         }
-    }
 
-    private static int[] updateArray(int[] arr, int head, int tail, int d) {
-        arr[head]--;
-        arr[tail]++;
-        return sort(arr, d);
-    }
+        private void remove(Integer num) {
+            if (num >= large.peek()) {
+                large.remove(num);
+            } else {
+                small.remove(num);
+            }
 
-    private static int[] sort(int[] arr, int d) {
+            adjustSize();
+        }
 
-        System.out.println(Arrays.toString(arr));
-
-        int[] sorted = new int[d];
-        int index = 0;
-
-        for (int i = 0; i < arr.length; i++) {
-            for (int x = 0; x < arr[i]; x++) {
-                sorted[index++] = i;
+        private void adjustSize() {
+            if (large.size() > small.size() + 1) {
+                small.offer(large.poll());
+            } else if (small.size() > large.size()) {
+                large.offer(small.poll());
             }
         }
 
-        System.out.println(Arrays.toString(sorted));
+        private int getDoubleMedian() {
+            if (large.size() > small.size()) {
+                return large.peek() * 2;
+            } else {
+                return small.peek() + large.peek();
+            }
+        }
 
-        return sorted;
+        public String toString() {
+            return small + " - " + large;
+        }
     }
+
 }
