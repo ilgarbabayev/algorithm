@@ -29,7 +29,7 @@ public class DataConverter {
             e.printStackTrace();
         }
 
-        if (row < 0 || row >= list.size()) {
+        if (row < 0 || row > list.size()) {
             throw new OutOfBound("Row should be in interval 0 < row < " + list.size());
         }
 

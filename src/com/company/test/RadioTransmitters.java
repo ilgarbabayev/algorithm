@@ -18,7 +18,7 @@ public class RadioTransmitters {
 
         List<Integer> list;
 
-        int row = 1;
+        int row = 5;
         int k = map.get(row);
 
         try {
@@ -28,8 +28,6 @@ public class RadioTransmitters {
             return;
         }
 
-//        System.out.println(list);
-
         System.out.println(hackerlandRadioTransmitters(list, k));
     }
 
@@ -37,21 +35,22 @@ public class RadioTransmitters {
         int count = 0;
 
         Collections.sort(x);
-
         System.out.println(x);
 
-        for (int i = 0; i < x.size() - 1;) {
-            int current = x.get(i);
+        for (int i = 0; i < x.size();) {
+            Integer toCompare = x.get(i);
 
-            Integer next = x.get(i + 1);
+            while (i < x.size() && toCompare + k >= x.get(i)){
+                i++;
+            }
 
-            while (next <= current + k && i < x.size() - 1){
-                next = x.get(++i);
-            };
+            toCompare = x.get(i - 1);
 
+            while (i < x.size() && toCompare + k >= x.get(i)) {
+                i++;
+            }
             count++;
         }
-
         return count == 0 ? 1 : count;
     }
 }
