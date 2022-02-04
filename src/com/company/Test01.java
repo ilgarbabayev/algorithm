@@ -10,14 +10,14 @@ import java.util.*;
 public class Test01 {
 
     public static void main(String[] args) throws IOException {
-        LinkedList<Integer> deque = new LinkedList<>();
-        deque.add(1);
-        deque.offer(2);
-        deque.offer(3);
-        deque.size();
-        deque.remove();
-        deque.remove(2);
-        deque.poll();
+        LinkedList<Integer> deque = new LinkedList<>(new ArrayList<>(List.of(5,9,8,2,3,6,4,7)));
+
+        for (int i = 0; i < deque.size(); i++) {
+            Integer value = deque.get(i);
+            if (value % 2 == 0) {
+
+            }
+        }
     }
 }
 
