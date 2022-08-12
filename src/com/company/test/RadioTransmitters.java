@@ -37,7 +37,9 @@ public class RadioTransmitters {
         Collections.sort(x);
         System.out.println(x);
 
-        for (int i = 0; i < x.size();) {
+        int i = 0;
+
+        while (i < x.size()){
             Integer toCompare = x.get(i);
 
             while (i < x.size() && toCompare + k >= x.get(i)){
@@ -51,6 +53,6 @@ public class RadioTransmitters {
             }
             count++;
         }
-        return count == 0 ? 1 : count;
+        return count;
     }
 }
