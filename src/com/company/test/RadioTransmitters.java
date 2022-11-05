@@ -18,7 +18,7 @@ public class RadioTransmitters {
 
         List<Integer> list;
 
-        int row = 5;
+        int row = 3;
         int k = map.get(row);
 
         try {
@@ -53,6 +53,6 @@ public class RadioTransmitters {
             }
             count++;
         }
-        return count;
+        return count == 0 ? 1 : count;
     }
 }
