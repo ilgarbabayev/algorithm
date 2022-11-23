@@ -1,10 +1,10 @@
-package com.company;
+package com.company.sort;
 
 
 import java.io.IOException;
 import java.util.Arrays;
 
-public class Test01 {
+public class RadixString {
 
     public static void main(String[] args) throws IOException {
         String[] strArray = {"bcdef", "dbaqc", "abcde", "omadd", "bbbbb"};

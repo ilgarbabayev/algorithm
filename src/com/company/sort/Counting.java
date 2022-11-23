@@ -8,7 +8,7 @@ public class Counting {
         int[] intArray = {2,5,7,4,3,9,10,8,6,5};
 
 
-        countingSort(intArray, 1, 10);
+        countingSort(intArray, 2, 10);
         System.out.println("intArray = " + Arrays.toString(intArray));
         System.out.println(count);
     }
