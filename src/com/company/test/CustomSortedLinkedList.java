@@ -1,11 +1,9 @@
-package com.company;
+package com.company.test;
 
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.LinkedList;
 
-public class Test01 {
+public class CustomSortedLinkedList {
 
     public static void main(String[] args) throws IOException {
 
