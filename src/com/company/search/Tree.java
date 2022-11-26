@@ -12,6 +12,13 @@ public class Tree {
     }
   }
 
+  public TreeNode get(int value) {
+    if (root != null) {
+      return root.get(value);
+    }
+    return null;
+  }
+
   public void traverseInOrder () {
     if (root != null) {
       root.traverseInOrder();
@@ -63,6 +70,22 @@ class TreeNode {
         rightNode.insert(newValue);
       }
     }
+  }
+
+  public TreeNode get(int value) {
+    if (value == this.value) return this;
+
+    if (value < this.value) {
+      if (leftNode != null) {
+        return leftNode.get(value);
+      }
+    } else {
+      if (rightNode != null) {
+        return rightNode.get(value);
+      }
+    }
+
+    return null;
   }
 
   public void traverseInOrder() {
