@@ -81,10 +81,18 @@ public class Tree {
     tree.insert(31);
 
     tree.traverseInOrder();
-
     System.out.println();
+
     System.out.println(tree.min());
     System.out.println(tree.max());
+
+    tree.delete(15);
+    tree.traverseInOrder();
+    System.out.println();
+
+    tree.delete(30);
+    tree.traverseInOrder();
+    System.out.println();
   }
 }
 
