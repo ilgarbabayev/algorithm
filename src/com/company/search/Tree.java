@@ -19,7 +19,7 @@ public class Tree {
     return null;
   }
 
-  public void traverseInOrder () {
+  public void traverseInOrder() {
     if (root != null) {
       root.traverseInOrder();
     }
@@ -73,7 +73,9 @@ class TreeNode {
   }
 
   public TreeNode get(int value) {
-    if (value == this.value) return this;
+    if (value == this.value) {
+      return this;
+    }
 
     if (value < this.value) {
       if (leftNode != null) {
@@ -86,6 +88,18 @@ class TreeNode {
     }
 
     return null;
+  }
+
+  public int min() {
+    if (leftNode == null) return this.value;
+
+    return leftNode.min();
+  }
+
+  public int max() {
+    if (rightNode == null) return this.value;
+
+    return rightNode.max();
   }
 
   public void traverseInOrder() {
