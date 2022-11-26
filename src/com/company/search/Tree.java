@@ -19,6 +19,22 @@ public class Tree {
     return null;
   }
 
+  public int min() {
+    if (root == null) {
+      return Integer.MIN_VALUE;
+    }
+
+    return root.min();
+  }
+
+  public int max() {
+    if (root == null) {
+      return Integer.MAX_VALUE;
+    }
+
+    return root.max();
+  }
+
   public void traverseInOrder() {
     if (root != null) {
       root.traverseInOrder();
@@ -91,13 +107,17 @@ class TreeNode {
   }
 
   public int min() {
-    if (leftNode == null) return this.value;
+    if (leftNode == null) {
+      return this.value;
+    }
 
     return leftNode.min();
   }
 
   public int max() {
-    if (rightNode == null) return this.value;
+    if (rightNode == null) {
+      return this.value;
+    }
 
     return rightNode.max();
   }
