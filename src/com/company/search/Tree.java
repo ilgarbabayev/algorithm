@@ -19,6 +19,33 @@ public class Tree {
     return null;
   }
 
+  public void delete(int value) {
+    root = delete(root, value);
+  }
+
+  private TreeNode delete(TreeNode subtreeNode, int value) {
+    if (subtreeNode == null) {
+      return null;
+    }
+
+    if (value < subtreeNode.value) {
+      subtreeNode.leftNode = delete(subtreeNode.leftNode, value);
+    } else if (value > subtreeNode.value) {
+      subtreeNode.rightNode = delete(subtreeNode.rightNode, value);
+    } else {
+      if (subtreeNode.leftNode == null) {
+        return subtreeNode.rightNode;
+      } else if (subtreeNode.rightNode == null) {
+        return subtreeNode.leftNode;
+      } else {
+        subtreeNode.value = subtreeNode.rightNode.min();
+        subtreeNode.rightNode = delete(subtreeNode.rightNode, subtreeNode.value);
+      }
+    }
+
+    return subtreeNode;
+  }
+
   public int min() {
     if (root == null) {
       return Integer.MIN_VALUE;
@@ -53,9 +80,11 @@ public class Tree {
     tree.insert(22);
     tree.insert(31);
 
-    System.out.println(tree);
-
     tree.traverseInOrder();
+
+    System.out.println();
+    System.out.println(tree.min());
+    System.out.println(tree.max());
   }
 }
 
