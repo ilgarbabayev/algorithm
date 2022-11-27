@@ -68,6 +68,12 @@ public class Tree {
     }
   }
 
+  public void traversePreOrder() {
+    if (root != null) {
+      root.traversePreOrder();
+    }
+  }
+
   public static void main(String[] args) {
     Tree tree = new Tree();
     tree.insert(25);
@@ -80,13 +86,18 @@ public class Tree {
     tree.insert(22);
     tree.insert(31);
 
+    System.out.println("In Order");
     tree.traverseInOrder();
+    System.out.println();
+
+    System.out.println("Pre Order");
+    tree.traversePreOrder();
     System.out.println();
 
     System.out.println(tree.min());
     System.out.println(tree.max());
 
-    tree.delete(15);
+    tree.delete(27);
     tree.traverseInOrder();
     System.out.println();
 
@@ -167,6 +178,19 @@ class TreeNode {
 
     if (rightNode != null) {
       rightNode.traverseInOrder();
+    }
+  }
+
+  public void traversePreOrder() {
+
+    System.out.print(value + ", ");
+
+    if (leftNode != null) {
+      leftNode.traversePreOrder();
+    }
+
+    if (rightNode != null) {
+      rightNode.traversePreOrder();
     }
   }
 }
