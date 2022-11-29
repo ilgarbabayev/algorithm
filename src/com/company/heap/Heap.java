@@ -17,12 +17,9 @@ public class Heap {
 
     heap1.printHeap();
 
-    heap1.delete(5);
+    heap1.sort();
     heap1.printHeap();
 
-    System.out.println(heap1.peek());
-    heap1.delete(0);
-    System.out.println(heap1.peek());
   }
 
   private int[] heap;
@@ -69,6 +66,18 @@ public class Heap {
     size--;
 
     return deletedValue;
+  }
+
+  public void sort() {
+    int lastHeapIndex = size - 1;
+
+    for (int i = 0; i < lastHeapIndex; i++) {
+      int tmp = heap[0];
+      heap[0] = heap[lastHeapIndex - i];
+      heap[lastHeapIndex - i] = tmp;
+
+      fixHeapBelow(0, lastHeapIndex - i - 1);
+    }
   }
 
   private void fixHeapAbove(int index) {
