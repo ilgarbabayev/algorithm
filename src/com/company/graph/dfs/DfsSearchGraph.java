@@ -20,7 +20,7 @@ public class DfsSearchGraph {
 
     graph.print();
 
-    System.out.println(graph.depthFirstSearch(3));
+    graph.depthFirstSearch(2);
   }
 }
 
@@ -46,11 +46,9 @@ class Graph {
     return matrix[src][dst] == 1;
   }
 
-  public Node depthFirstSearch(int src) {
+  public void depthFirstSearch(int src) {
     boolean[] visited = new boolean[matrix.length];
     dfsHelper(src, visited);
-
-    return null;
   }
 
   private void dfsHelper(int src, boolean[] visited) {
@@ -66,7 +64,6 @@ class Graph {
         dfsHelper(i, visited);
       }
     }
-    return;
   }
 
   public void print() {
