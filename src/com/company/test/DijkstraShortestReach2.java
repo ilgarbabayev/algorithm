@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -73,11 +74,11 @@ public class DijkstraShortestReach2 {
       }
 
       if (addMembers) {
-        addMembers(xMembers, yMembers, x, y);
-        addMembers(yMembers, xMembers, y, x);
 
-        xMembers.keySet().forEach(k -> addSubMembers(xMembers, nodes.get(k - 1), x, k));
-        yMembers.keySet().forEach(k -> addSubMembers(yMembers, nodes.get(k - 1), y, k));
+        var startMembers = nodes.get(s - 1);
+        var newMembers = new HashMap<>(startMembers);
+        startMembers.keySet().forEach(k -> addMembers(nodes.get(k - 1), newMembers, k, s));
+        nodes.set(s - 1, newMembers);
       }
     }
 
@@ -98,12 +99,6 @@ public class DijkstraShortestReach2 {
         to.put(k, v + length);
       }
     });
-  }
-
-  private static void addSubMembers(Map<Integer, Integer> from, Map<Integer, Integer> to, int fromNode, int toNode) {
-    if (to.get(fromNode) != null)  {
-      addMembers(from, to, fromNode, toNode);
-    }
   }
 
   static class WeightGraph {
