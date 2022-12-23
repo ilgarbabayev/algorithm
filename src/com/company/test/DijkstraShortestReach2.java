@@ -1,11 +1,13 @@
 package com.company.test;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.TreeMap;
 
 /*
@@ -38,14 +40,14 @@ public class DijkstraShortestReach2 {
   }
 
   public static List<Integer> shortestReach(int n, List<List<Integer>> edges, int s) {
-    PriorityQueue<WeightGraph> queue = new PriorityQueue<>(Comparator.comparing(wg -> wg.length));
+    Queue<WeightGraph> queue = new ArrayDeque<>();
 
     edges.forEach(edge -> queue.add(new WeightGraph(edge.get(0), edge.get(1), edge.get(2))));
 
     List<Map<Integer, Integer>> nodes = new ArrayList<>();
 
     for (int i = 0; i < n; i++) {
-      nodes.add(new TreeMap<>());
+      nodes.add(new HashMap<>());
     }
 
     while (!queue.isEmpty()) {
@@ -58,19 +60,25 @@ public class DijkstraShortestReach2 {
       var xMembers = nodes.get(x - 1);
       var yMembers = nodes.get(y - 1);
 
+      boolean addMembers = false;
+
       if (xMembers.getOrDefault(y, Integer.MAX_VALUE) > len) {
         xMembers.put(y, len);
+        addMembers = true;
       }
 
       if (yMembers.getOrDefault(x, Integer.MAX_VALUE) > len) {
         yMembers.put(x, len);
+        addMembers = true;
       }
 
-      addMembers(xMembers, yMembers, x, y);
-      addMembers(yMembers, xMembers, y, x);
+      if (addMembers) {
+        addMembers(xMembers, yMembers, x, y);
+        addMembers(yMembers, xMembers, y, x);
 
-      xMembers.keySet().forEach(k -> addSubMembers(xMembers, nodes.get(k - 1), x, k));
-      yMembers.keySet().forEach(k -> addSubMembers(yMembers, nodes.get(k - 1), y, k));
+        xMembers.keySet().forEach(k -> addSubMembers(xMembers, nodes.get(k - 1), x, k));
+        yMembers.keySet().forEach(k -> addSubMembers(yMembers, nodes.get(k - 1), y, k));
+      }
     }
 
     List<Integer> result = new ArrayList<>();
