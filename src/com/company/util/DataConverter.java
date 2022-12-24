@@ -39,4 +39,24 @@ public class DataConverter {
     private static List<Integer> convertToInteger(String data) {
         return Arrays.stream(data.split(SPLITTER_OF_VALUES)).map(Integer::valueOf).collect(Collectors.toList());
     }
+
+    public static List<List<Integer>> getIntList(String fileName) {
+        String path = "./src/resources/" + fileName;
+        System.out.println(path);
+        List<String> list = new ArrayList<>();
+        try {
+            list = new ArrayList<>(Files.readAllLines(Paths.get(path)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return convertToIntegerList(list);
+    }
+
+    private static List<List<Integer>> convertToIntegerList(List<String> list) {
+        return list.stream()
+                   .map(str -> Arrays.stream(str.split(SPLITTER_OF_VALUES))
+                       .map(Integer::valueOf).collect(Collectors.toList()))
+                   .collect(Collectors.toList());
+    }
 }
