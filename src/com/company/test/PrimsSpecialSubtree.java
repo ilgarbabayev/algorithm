@@ -22,14 +22,14 @@ public class PrimsSpecialSubtree {
 //    int start = 1;
 //    var edges = List.of(List.of(1,2,3),List.of(1,3,4),List.of(4,2,6),List.of(5,2,2),List.of(2,3,5),List.of(3,5,7));
 //
-//    int n = 5;
-//    int start = 1;
-//    var edges = List.of(List.of(1,2,2),List.of(2,3,3),List.of(3,5,7),List.of(1,4,6),List.of(2,4,8),List.of(2,5,5), List.of(4,5,9));
-
-
     int n = 5;
-    int start = 2;
-    var edges = List.of(List.of(1,2,20),List.of(1,3,50),List.of(1,4,70),List.of(1,5,90),List.of(2,3,30),List.of(3,4,40), List.of(4,5,60));
+    int start = 1;
+    var edges = List.of(List.of(1,2,2),List.of(2,3,3),List.of(3,5,7),List.of(1,4,6),List.of(2,4,8),List.of(2,5,5), List.of(4,5,9));
+
+
+//    int n = 5;
+//    int start = 2;
+//    var edges = List.of(List.of(1,2,20),List.of(1,3,50),List.of(1,4,70),List.of(1,5,90),List.of(2,3,30),List.of(3,4,40), List.of(4,5,60));
 
     var sum = prims(n, edges, start);
 

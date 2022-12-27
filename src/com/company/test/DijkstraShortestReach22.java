@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Queue;
 
 /*
@@ -37,22 +38,16 @@ public class DijkstraShortestReach22 {
   }
 
   public static List<Integer> shortestReach(int n, List<List<Integer>> edges, int s) {
-    Queue<WeightGraph> queue = new ArrayDeque<>();
-
-    edges.forEach(edge -> queue.add(new WeightGraph(edge.get(0), edge.get(1), edge.get(2))));
-
     List<Map<Integer, Integer>> nodes = new ArrayList<>();
 
     for (int i = 0; i < n; i++) {
       nodes.add(new HashMap<>());
     }
 
-    while (!queue.isEmpty()) {
-      var graph = queue.poll();
-
-      var x = graph.from;
-      var y = graph.to;
-      var len = graph.length;
+    edges.forEach(edge -> {
+      var x = edge.get(0);
+      var y = edge.get(1);
+      var len = edge.get(2);
 
       var xMembers = nodes.get(x - 1);
       var yMembers = nodes.get(y - 1);
@@ -76,7 +71,7 @@ public class DijkstraShortestReach22 {
         startMembers.keySet().forEach(k -> addMembers(nodes.get(k - 1), newMembers, k, s));
         nodes.set(s - 1, newMembers);
       }
-    }
+    });
 
     List<Integer> result = new ArrayList<>();
 
@@ -95,18 +90,6 @@ public class DijkstraShortestReach22 {
         to.put(k, v + length);
       }
     });
-  }
-
-  static class WeightGraph {
-    int from;
-    int to;
-    int length;
-
-    public WeightGraph(int from, int to, int length) {
-      this.from = from;
-      this.to = to;
-      this.length = length;
-    }
   }
 
 }
