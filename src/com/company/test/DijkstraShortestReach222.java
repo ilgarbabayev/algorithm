@@ -16,39 +16,55 @@ If a node is unreachable, its distance is -1. Nodes will be numbered consecutive
 public class DijkstraShortestReach222 {
 
   public static void main(String[] args) {
-//    int n = 5;
-//    int s = 1;
-//    var edges = List.of(
-//        List.of(1,2,5),
-//        List.of(2,3,6),
-//        List.of(3,4,2),
-//        List.of(1,3,15));
+    //    int n = 5;
+    //    int s = 1;
+    //    var edges = List.of(
+    //        List.of(1,2,5),
+    //        List.of(2,3,6),
+    //        List.of(3,4,2),
+    //        List.of(1,3,15));
 
-//    int n = 4;
-//    int s = 1;
-//    var edges = List.of(
-//        List.of(1,2,24),
-//        List.of(1,4,20),
-//        List.of(3,1,3),
-//        List.of(4,3,12));
+    //    int n = 4;
+    //    int s = 1;
+    //    var edges = List.of(
+    //        List.of(1,2,24),
+    //        List.of(1,4,20),
+    //        List.of(3,1,3),
+    //        List.of(4,3,12));
 
-//    int n = 4;
-//    int s = 1;
-//    var edges = List.of(
-//        List.of(1,2,24),
-//        List.of(1,4,20),
-//        List.of(3,1,3),
-//        List.of(4,3,12));
+    //    int n = 4;
+    //    int s = 1;
+    //    var edges = List.of(
+    //        List.of(1,2,24),
+    //        List.of(1,4,20),
+    //        List.of(3,1,3),
+    //        List.of(4,3,12));
 
-//    int n = 5;
-//    int s = 1;
-//    var edges = List.of(
-//        List.of(3,1,3),
-//        List.of(5,4,3),
-//        List.of(4,3,12),
-//        List.of(1,4,20),
-//        List.of(1,2,24),
-//        List.of(3,5,3));
+    //    int n = 5;
+    //    int s = 1;
+    //    var edges = List.of(
+    //        List.of(3,1,3),
+    //        List.of(5,4,3),
+    //        List.of(4,3,12),
+    //        List.of(1,4,20),
+    //        List.of(1,2,24),
+    //        List.of(3,5,3));
+
+    //    int n = 5;
+    //    int s = 1;
+    //    var edges = List.of(
+    //        List.of(1,2,2),
+    //        List.of(2,3,3),
+    //        List.of(1,4,6),
+    //        List.of(3,5,7),
+    //        List.of(2,4,8),
+    //        List.of(2,5,5),
+    //        List.of(4,5,9));
+
+    //    var result = shortestReach(n, edges, s);
+    //
+    //    System.out.println("-------------------------");
+    //    System.out.println(result);
 
     var listList = DataConverter.getIntList("djikstra_input.txt").stream().skip(1).collect(Collectors.toList());
     var outputList = new ArrayList<>(DataConverter.getIntList("djikstra_output.txt"));
@@ -61,7 +77,7 @@ public class DijkstraShortestReach222 {
 
     List<Integer> rslt;
 
-    for(List<Integer> list : listList) {
+    for (List<Integer> list : listList) {
       if (list.size() == 1) {
         start = list.get(0);
         end = true;
@@ -80,25 +96,19 @@ public class DijkstraShortestReach222 {
         end = false;
       }
     }
-
-//
-//    var result = shortestReach(n, edges, s);
-//
-//    System.out.println("-------------------------");
-//    System.out.println(result);
-
   }
 
   public static List<Integer> shortestReach(int n, List<List<Integer>> edges, int s) {
     List<Queue<WeightGraph>> list = new ArrayList<>();
     int[] weight = new int[n];
     boolean[] visited = new boolean[n];
-    int[] parent = new int[n];
+    //    int[] parent = new int[n];
 
     for (int i = 0; i < n; i++) {
       list.add(new PriorityQueue<>(Comparator.comparing(a -> a.length)));
       weight[i] = Integer.MAX_VALUE;
     }
+    weight[s - 1] = 0;
 
     edges.forEach(edge -> {
       var xMembers = list.get(edge.get(0) - 1);
@@ -112,7 +122,7 @@ public class DijkstraShortestReach222 {
     queue.addAll(list.get(s - 1));
 
     while (!queue.isEmpty()) {
-      populate(list, queue, parent, weight, visited, s);
+      populate(list, queue, weight, visited, s);
     }
 
     int sum = 0;
@@ -123,29 +133,20 @@ public class DijkstraShortestReach222 {
         if (Integer.MAX_VALUE == weight[i]) {
           result.add(-1);
         } else {
-          if (parent[i] == s) {
-            result.add(weight[i]);
-          } else {
-            int parentId = parent[i];
-            sum = weight[parentId - 1] + weight[i];
-            result.add(sum);
-            weight[i] = sum;
-          }
+          result.add(weight[i]);
         }
-
       }
     }
 
     return result;
   }
 
-  private static void populate(List<Queue<WeightGraph>> list, Queue<WeightGraph> queue, int[] parent, int[] weight, boolean[] visited, int start) {
+  private static void populate(List<Queue<WeightGraph>> list, Queue<WeightGraph> queue, int[] weight, boolean[] visited, int start) {
     var graph = queue.poll();
 
-    if (graph.to != start && !visited[graph.to - 1] && weight[graph.to - 1] > graph.length) {
+    if (graph.to != start && !visited[graph.to - 1] && weight[graph.to - 1] > graph.length + weight[graph.from - 1]) {
       visited[graph.to - 1] = true;
-      weight[graph.to - 1] = graph.length;
-      parent[graph.to - 1] = graph.from;
+      weight[graph.to - 1] = graph.length + weight[graph.from - 1];
       queue.addAll(list.get(graph.to - 1));
     }
   }
