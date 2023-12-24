@@ -8,8 +8,8 @@ public class Quick {
         //        int[] intArray = {20, 35, -15, 7, 55, 1, -22};
 //        int[] intArray = {125, 99, 89, 66, 66, 12, 7, 4, 4, -9, -65 };
 //        int[] intArray = {-9, 99,  66, 4, 66,  -65, 125, 12, 7, 89,  4};
-        int[] intArray = {4,7,-9,12,66,-65,89,4,66, 99, 125};
-//        int[] intArray = {4,7,8,-9,12,66,-65};
+//        int[] intArray = {4,7,-9,12,66,-65,89,4,66, 99, 125};
+        int[] intArray = {4,7,8,-9,12,66,-65};
 
 
         quickSort(intArray, 0, intArray.length);
@@ -29,26 +29,26 @@ public class Quick {
 
     private static int partition(int[] input, int start, int end) {
         int pivot = input[start];
-        int i = start;
-        int j = end;
+        int x = start;
+        int y = end;
 
-        while (i < j) {
-            while (i < j && input[--j] >= pivot);
+        while (x < y) {
+            while (x < y && input[--y] >= pivot);
 
-            if (i < j) {
-                input[i] = input[j];
+            if (x < y) {
+                input[x] = input[y];
                 count++;
             }
 
-            while (i < j && input[++i] <= pivot);
+            while (x < y && input[++x] <= pivot);
 
-            if (i < j) {
-                input[j] = input[i];
+            if (x < y) {
+                input[y] = input[x];
                 count++;
             }
         }
 
-        input[j] = pivot;
-        return j;
+        input[y] = pivot;
+        return y;
     }
 }
