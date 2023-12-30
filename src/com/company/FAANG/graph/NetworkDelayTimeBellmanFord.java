@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-public class NetworkDelayTime {
+public class NetworkDelayTimeBellmanFord {
 
   public static void main(String[] args) {
     int n1 = 4;
@@ -45,55 +45,43 @@ public class NetworkDelayTime {
         new int[][] {{3, 5, 78}, {2, 1, 1}, {1, 3, 0}, {4, 3, 59}, {5, 3, 85}, {5, 2, 22}, {2, 4, 23}, {1, 4, 43}, {4, 5, 75}, {5, 1, 15},
             {1, 5, 91}, {4, 1, 16}, {3, 2, 98}, {3, 4, 22}, {5, 4, 31}, {1, 2, 0}, {2, 5, 4}, {4, 2, 51}, {3, 1, 36}, {2, 3, 59}};
 
-//    System.out.println(networkDelayTime(times1, n1, k1));
-//    System.out.println(networkDelayTime(times2, n2, k2));
-//    System.out.println(networkDelayTime(times3, n3, k3));
-//    System.out.println(networkDelayTime(times4, n4, k4));
-//    System.out.println(networkDelayTime(times5, n5, k5));
+    System.out.println(networkDelayTime(times1, n1, k1));
+    System.out.println(networkDelayTime(times2, n2, k2));
+    System.out.println(networkDelayTime(times3, n3, k3));
+    System.out.println(networkDelayTime(times4, n4, k4));
+    System.out.println(networkDelayTime(times5, n5, k5));
     System.out.println(networkDelayTime(times6, n6, k6));
   }
 
   public static int networkDelayTime(int[][] times, int n, int k) {
-    int[] accumTime = new int[n + 1];
-    Arrays.fill(accumTime, Integer.MAX_VALUE);
+    int[] distance = new int[n + 1];
+    Arrays.fill(distance, 1_000_000);
+    distance[k] = 0;
 
-    Map<Integer, Map<Integer, Integer>> adj = new HashMap<>();
+    for (int i = 0; i < n-1; i++) {
+      int count = 0;
+      for (int j = 0; j < times.length; j++) {
+        int source = times[j][0];
+        int target = times[j][1];
+        int weight = times[j][2];
 
-    for (int[] part : times) {
-      adj.putIfAbsent(part[0], new HashMap<>());
-      adj.get(part[0]).put(part[1], part[2]);
-    }
-
-    Queue<int[]> queue = new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));
-    queue.add(new int[] {k, 0});
-    accumTime[k] = 0;
-
-    while (!queue.isEmpty()) {
-      int[] curr = queue.poll();
-
-      int currNode = curr[0];
-
-      for (Map.Entry<Integer, Integer> next : adj.getOrDefault(currNode, new HashMap<>()).entrySet()) {
-        Integer nextNode = next.getKey();
-        Integer nextWeight = next.getValue();
-
-        int i2 = accumTime[currNode] + nextWeight;
-
-        if (i2 >= accumTime[nextNode]) {
-          continue;
+        if (distance[source] + weight < distance[target]) {
+          distance[target] = distance[source] + weight;
+          count++;
         }
-        accumTime[nextNode] = i2;
-        queue.add(new int[] {nextNode, nextWeight});
+      }
+      if (count == 0) {
+        break;
       }
     }
 
     int maxTime = 0;
 
-    for (int x = 1; x < accumTime.length; x++) {
-      if (accumTime[x] == Integer.MAX_VALUE) {
+    for (int x = 1; x < distance.length; x++) {
+      if (distance[x] == 1_000_000) {
         return -1;
       }
-      maxTime = Math.max(maxTime, accumTime[x]);
+      maxTime = Math.max(maxTime, distance[x]);
     }
     return maxTime;
   }
