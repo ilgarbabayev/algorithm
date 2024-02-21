@@ -1,4 +1,4 @@
-package com.company.test;
+package com.company.FAANG.interview.crossword;
 
 /*
 
@@ -45,7 +45,8 @@ public class CrosswordPuzzle {
   }
 
   static boolean isPossible(char[][] board, String word, int row, int col, int rows, int cols, int d1, int d2) {
-    int i = 0, len = word.length();
+    int i = 0;
+    int len = word.length();
     while (i < len && inRange(row, col, rows, cols) && (board[row][col] == ' ' || board[row][col] == word.charAt(i))) {
       row += d1;
       col += d2;
