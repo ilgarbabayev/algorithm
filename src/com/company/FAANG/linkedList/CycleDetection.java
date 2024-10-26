@@ -26,7 +26,7 @@ public class CycleDetection {
       tortoise = tortoise.next;
 
       if (hare == null || hare.next == null) {
-        break;
+        return null;
       } else {
         hare = hare.next;
       }
