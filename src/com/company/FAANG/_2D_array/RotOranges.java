@@ -1,4 +1,4 @@
-package com.company.FAANG.tree;
+package com.company.FAANG._2D_array;
 
 /*
   You are given an m x n grid where each cell can have one of three values:

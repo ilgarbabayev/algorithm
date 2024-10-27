@@ -1,4 +1,4 @@
-package com.company.FAANG.tree;
+package com.company.FAANG._2D_array;
 
 /*
   Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands.
