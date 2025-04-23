@@ -60,8 +60,8 @@ public class LongestSubstring {
         l = index + 1;
       }
       map.put(c, r);
-      max = Math.max(max, r - l + 1);
       r++;
+      max = Math.max(max, r - l);
     }
 
     return max;
