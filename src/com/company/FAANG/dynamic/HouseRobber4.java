@@ -1,7 +1,8 @@
 package com.company.FAANG.dynamic;
 
 /*
-There are several consecutive houses along a street, each of which has some money inside. There is also a robber, who wants to steal money from the homes, but he refuses to steal from adjacent homes.
+There are several consecutive houses along a street, each of which has some money inside. There is also a robber,
+ who wants to steal money from the homes, but he refuses to steal from adjacent homes.
 
 The capability of the robber is the maximum amount of money he steals from one house of all the houses he robbed.
 

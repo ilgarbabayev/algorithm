@@ -6,10 +6,9 @@ public class BackspaceStringCompare {
   Note that after backspacing an empty text, the text will continue empty.*/
 
   public static void main(String[] args) throws RuntimeException {
-    String s = "abc#d";
-    String t = "abzz##d";
-    boolean result = compareStrings(s, t);
-    System.out.println(result);
+    System.out.println(compareStrings("abc#d", "abzz##d"));
+    System.out.println(compareStrings("ab##", "c#d#"));
+    System.out.println(compareStrings("a#c", "b"));
   }
 
   public static boolean compareStrings(String S, String T) {
@@ -26,7 +25,7 @@ public class BackspaceStringCompare {
             p1--;
             backCount--;
 
-            if(S.charAt(p1) == '#') {
+            if(p1 >= 0 && S.charAt(p1) == '#') {
               backCount += 2;
             }
           }
@@ -39,7 +38,7 @@ public class BackspaceStringCompare {
             p2--;
             backCount--;
 
-            if(T.charAt(p2) == '#') {
+            if(p2 >= 0 && T.charAt(p2) == '#') {
               backCount += 2;
             }
           }
