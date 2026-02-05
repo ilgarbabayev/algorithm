@@ -81,10 +81,13 @@ class ListNode {
     StringBuilder builder = new StringBuilder();
     builder.append("[").append(val).append("]");
     ListNode i = next;
-    while (i != null) {
+    if (i != null) {
       builder.append(" -> ").append(i.val);
-      i = i.next;
     }
+//    while (i != null) {
+//      builder.append(" -> ").append(i.val);
+//      i = i.next;
+//    }
 
     return builder.toString();
   }
