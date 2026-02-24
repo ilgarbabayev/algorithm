@@ -25,10 +25,27 @@ package com.company.FAANG._2D_array;
 
  */
 
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
 
 public class WallsAndGates {
+
+    public static void main(String[] args) {
+        int [][] rooms = new int[][] {
+                {Integer.MAX_VALUE, -1, 0, Integer.MAX_VALUE},
+                {Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, -1},
+                {Integer.MAX_VALUE, -1, Integer.MAX_VALUE, -1},
+                {0, -1, Integer.MAX_VALUE, Integer.MAX_VALUE},
+        };
+
+        WallsAndGates  wallsAndGates = new WallsAndGates();
+        wallsAndGates.wallsAndGates(rooms);
+
+        for (int[] row : rooms) {
+            System.out.println(Arrays.toString(row));
+        }
+    }
 
     public void wallsAndGates(int[][] rooms) {
         // get the number of rows and columns in the rooms grid
