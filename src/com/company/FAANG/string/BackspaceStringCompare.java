@@ -23,7 +23,7 @@ public class BackspaceStringCompare {
                 return true;
             }
 
-            if (p1 < 0 || p1 < 0) {
+            if (p1 < 0 || p2 < 0) {
                 return false;
             }
 
